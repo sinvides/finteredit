@@ -45,3 +45,11 @@ pub fn no_second_point() -> Text {
 pub fn no_undo() -> Text {
     Text::translate("finteredit.error.no_undo", vec![])
 }
+
+pub fn too_large(max: i64) -> Text {
+    Text::translate("finteredit.error.too_large", vec![arg(max)])
+}
+
+pub fn wrong_dimension() -> Text {
+    Text::translate("finteredit.error.dimension", vec![])
+}

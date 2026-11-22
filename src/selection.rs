@@ -1,16 +1,25 @@
 use std::collections::HashMap;
 use std::sync::{Mutex, OnceLock};
 
-use mod_api::BlockState;
+use mod_api::{BlockState, PlayerRef, ServerHost};
 
-#[derive(Clone, Copy)]
+pub const MAX_VOLUME: i64 = 32768;
+pub const MAX_UNDO_DEPTH: usize = 8;
+
+#[derive(Clone)]
 pub struct Selection {
     pub first: [i32; 3],
     pub second: Option<[i32; 3]>,
+    pub dimension: String,
+}
+
+pub struct UndoEntry {
+    pub dimension: String,
+    pub blocks: Vec<([i32; 3], BlockState)>,
 }
 
 type Points = HashMap<u128, Selection>;
-type History = HashMap<u128, Vec<Vec<([i32; 3], BlockState)>>>;
+type History = HashMap<u128, Vec<UndoEntry>>;
 
 static POINTS: OnceLock<Mutex<Points>> = OnceLock::new();
 static UNDO: OnceLock<Mutex<History>> = OnceLock::new();
@@ -21,6 +30,24 @@ pub fn points() -> &'static Mutex<Points> {
 
 pub fn undo() -> &'static Mutex<History> {
     UNDO.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
+pub fn dimension(host: &dyn ServerHost, player: PlayerRef) -> Option<String> {
+    player.dimension(host).map(|value| value.to_string())
+}
+
+pub fn clear_player(uuid: u128) {
+    points().lock().unwrap().remove(&uuid);
+    undo().lock().unwrap().remove(&uuid);
+}
+
+pub fn push_undo(uuid: u128, entry: UndoEntry) {
+    let mut history = undo().lock().unwrap();
+    let entries = history.entry(uuid).or_default();
+    if entries.len() >= MAX_UNDO_DEPTH {
+        entries.remove(0);
+    }
+    entries.push(entry);
 }
 
 pub fn volume(a: [i32; 3], b: [i32; 3]) -> i64 {

@@ -3,15 +3,15 @@ use mod_api::{
     RunModCommandEvent, ServerHost,
 };
 
-use crate::selection::{points, volume};
+use crate::selection::{dimension, points, volume, MAX_VOLUME};
 use crate::{blocks, editor, i18n, AXE};
 
 pub fn register(event: &mut RegisterCommandsEvent<'_>) {
     event.commands.push(Command::new("wand"));
     event.commands.push(Command::new("/wand"));
-    event.commands.push(Command::new("/set <n:text>"));
-    event.commands.push(Command::new("undo"));
-    event.commands.push(Command::new("/undo"));
+    event.commands.push(Command::op("/set <n:text>", 2));
+    event.commands.push(Command::op("undo", 2));
+    event.commands.push(Command::op("/undo", 2));
 }
 
 pub fn run(host: &mut dyn ServerHost, event: &mut RunModCommandEvent<'_>) -> Flow {
@@ -33,17 +33,28 @@ pub fn run(host: &mut dyn ServerHost, event: &mut RunModCommandEvent<'_>) -> Flo
                 Some(CommandArgumentValue::String(value)) => value.as_str(),
                 _ => return Flow::Cancel,
             };
-            if blocks::resolve(host, name).is_none() {
-                i18n::tell(host, player, i18n::unknown_block(name));
-                return Flow::Cancel;
-            }
-            let selection = match points().lock().unwrap().get(&uuid).copied() {
-                Some(selection) => selection,
+            let state = match blocks::resolve(host, name) {
+                Some(state) => state,
+                None => {
+                    i18n::tell(host, player, i18n::unknown_block(name));
+                    return Flow::Cancel;
+                }
+            };
+            let current = match dimension(host, player) {
+                Some(current) => current,
+                None => return Flow::Cancel,
+            };
+            let selection = match points().lock().unwrap().get(&uuid).cloned() {
+                Some(selection) => selection.clone(),
                 None => {
                     i18n::tell(host, player, i18n::no_selection());
                     return Flow::Cancel;
                 }
             };
+            if selection.dimension != current {
+                i18n::tell(host, player, i18n::wrong_dimension());
+                return Flow::Cancel;
+            }
             let second = match selection.second {
                 Some(second) => second,
                 None => {
@@ -51,26 +62,32 @@ pub fn run(host: &mut dyn ServerHost, event: &mut RunModCommandEvent<'_>) -> Flo
                     return Flow::Cancel;
                 }
             };
-            let state = match blocks::resolve(host, name) {
-                Some(state) => state,
-                None => return Flow::Cancel,
-            };
+            let count = volume(selection.first, second);
+            if count > MAX_VOLUME {
+                i18n::tell(host, player, i18n::too_large(MAX_VOLUME));
+                return Flow::Cancel;
+            }
             let level = match player.level(host) {
                 Some(level) => level,
                 None => return Flow::Cancel,
             };
             editor::fill(host, level, uuid, selection, state);
-            i18n::tell(host, player, i18n::filled(volume(selection.first, second)));
+            i18n::tell(host, player, i18n::filled(count));
             Flow::Cancel
         }
         Some("undo") | Some("/undo") => {
+            let current = match dimension(host, player) {
+                Some(current) => current,
+                None => return Flow::Cancel,
+            };
             let level = match player.level(host) {
                 Some(level) => level,
                 None => return Flow::Cancel,
             };
-            match editor::restore(host, uuid, level) {
-                Some(count) => i18n::tell(host, player, i18n::undone(count)),
-                None => i18n::tell(host, player, i18n::no_undo()),
+            match editor::restore(host, uuid, level, &current) {
+                Ok(count) => i18n::tell(host, player, i18n::undone(count)),
+                Err(editor::UndoError::Empty) => i18n::tell(host, player, i18n::no_undo()),
+                Err(editor::UndoError::WrongDimension) => i18n::tell(host, player, i18n::wrong_dimension()),
             }
             Flow::Cancel
         }

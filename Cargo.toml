@@ -1,6 +1,6 @@
 [package]
 name = "mod-finteredit"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["sinvides"]
 license = "MIT"
 edition = "2024"

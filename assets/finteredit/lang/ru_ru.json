@@ -6,5 +6,7 @@
   "finteredit.error.unknown_block": "Неизвестный блок: %s",
   "finteredit.error.no_selection": "Сначала выделите две точки.",
   "finteredit.error.no_second": "Выделите вторую точку.",
-  "finteredit.error.no_undo": "Нечего отменять."
+  "finteredit.error.no_undo": "Нечего отменять.",
+  "finteredit.error.too_large": "Выделение слишком большое: максимум %s блоков",
+  "finteredit.error.dimension": "Выделение находится в другом измерении."
 }

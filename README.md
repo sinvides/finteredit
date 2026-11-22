@@ -1,96 +1,111 @@
-# finteredit
+<div align="center">
 
-Минимальный мод для Horizon (Minecraft: Java Edition 26.3, переписанный на Rust). Позволяет выделять две точки по клику ЛКМ и застраивать получившийся параллелепипед одним из фиксированных блоков.
+<img src="banner-rounded.png" alt="finteredit banner" width="100%">
 
-## Возможности
+# ⛏️ finteredit
 
-- Команда `/wand` (также `//wand`) выдаёт деревянный топор и сбрасывает текущее выделение.
-- С топором в руке ЛКМ по блоку ставит первую точку, ПКМ — вторую. Блок при этом не ломается.
-- В чат сообщением тёмно-оранжевого цвета пишутся координаты точки и количество блоков в выделении (считается как объём области).
-- Команда `//set <n>` застраивает выделенную область выбранным блоком. Вариант `/set` не зарегистрирован — работает только `//set`.
-- Команда `//undo` (или `/undo`) отменяет последнюю застройку и возвращает блоки в исходное состояние.
+**Двухточечное выделение блоков, застройка области и отмена для Horizon**
 
-## Команды
+<img src="https://img.shields.io/badge/version-0.1.4-7c5cff?style=for-the-badge" alt="version">
+<img src="https://img.shields.io/badge/license-MIT-00c853?style=for-the-badge" alt="license">
+<img src="https://img.shields.io/badge/Horizon-26.3-ff7a00?style=for-the-badge" alt="game">
+<img src="https://img.shields.io/badge/built%20with-Rust-dea584?style=for-the-badge" alt="rust">
 
-| Команда | Действие |
-| --- | --- |
-| `/wand` или `//wand` | Выдать деревянный топор и начать новое выделение |
-| ЛКМ по блоку с топором | Поставить первую точку |
-| ПКМ по блоку с топором | Поставить вторую точку |
-| `//set <n>` | Заполнить выделенную область блоком под номером `n`. Только двойной слеш |
-| `//undo` или `/undo` | Отменить последнюю застройку |
+---
 
-## Доступные блоки
+### ✨ Что это
 
-| `n` | Блок |
-| --- | --- |
-| `0` | `minecraft:air` |
-| `1` | `minecraft:stone` |
-| `2` | `minecraft:grass_block` |
-| `3` | `minecraft:dirt` |
-| `4` | `minecraft:cobblestone` |
-| `5:1` | `minecraft:oak_planks` |
-| `5:2` | `minecraft:spruce_planks` |
-| `5:3` | `minecraft:birch_planks` |
-| `5:4` | `minecraft:jungle_planks` |
-| `5:5` | `minecraft:acacia_planks` |
-| `6` | `minecraft:bedrock` |
+Небольшой мод для **Horizon** (Minecraft: Java Edition 26.3, переписанный на Rust).
+Он даёт «волшебный топор»: ЛКМ ставит первую точку, ПКМ — вторую,
+после чего выделенную область можно застроить и отменить действие.
 
-Пример: `//set 5:3` — заполнить выделение берёзовыми досками.
+---
 
-## Локализация
+### 🎮 Команды
 
-Сообщения мода переведены на русский и английский. Файлы лежат в `assets/finteredit/lang/`.
-Язык выбирается автоматически по языку клиента. Чтобы добавить новый язык, скопируйте `en_us.json` под новым именем и переведите значения — подробнее в `LANGUAGES.md`.
+<table align="center" cellpadding="8" cellspacing="0">
+  <tr><th>Команда</th><th>Действие</th></tr>
+  <tr><td><code>/wand</code> или <code>//wand</code></td><td>Выдать деревянный топор и сбросить выделение</td></tr>
+  <tr><td><b>ЛКМ</b> по блоку с топором</td><td>Поставить первую точку. Блок не ломается</td></tr>
+  <tr><td><b>ПКМ</b> по блоку с топором</td><td>Поставить вторую точку. Блок не используется</td></tr>
+  <tr><td><code>//set &lt;n&gt;</code> <b>[оп 2]</b></td><td>Застроить выделенную область блоком под номером <code>n</code></td></tr>
+  <tr><td><code>//undo</code> или <code>/undo</code> <b>[оп 2]</b></td><td>Отменить последнюю застройку</td></tr>
+</table>
 
-## Структура проекта
+---
 
-```
-finteredit/
-├── horizon-mod.toml
-├── Cargo.toml
-├── Cargo.lock
-├── mod.wasm
-├── LICENSE
-├── README.md
-├── LANGUAGES.md
-├── src/
-│   ├── lib.rs
-│   ├── blocks.rs
-│   ├── commands.rs
-│   ├── editor.rs
-│   ├── i18n.rs
-│   ├── interact.rs
-│   └── selection.rs
-├── assets/finteredit/lang/
-│   ├── en_us.json
-│   └── ru_ru.json
-├── data/finteredit/
-└── target/horizon-mod/finteredit.hmod
-```
+### 🧱 Доступные блоки
 
-Каждая часть мода лежит в отдельном файле: блоки, команды, застройка, переводы, клики и выделение.
+<table align="center" cellpadding="6" cellspacing="0">
+  <tr><th><code>n</code></th><th>Блок</th><th><code>n</code></th><th>Блок</th></tr>
+  <tr><td><code>0</code></td><td>air</td><td><code>5:1</code></td><td>oak_planks</td></tr>
+  <tr><td><code>1</code></td><td>stone</td><td><code>5:2</code></td><td>spruce_planks</td></tr>
+  <tr><td><code>2</code></td><td>grass_block</td><td><code>5:3</code></td><td>birch_planks</td></tr>
+  <tr><td><code>3</code></td><td>dirt</td><td><code>5:4</code></td><td>jungle_planks</td></tr>
+  <tr><td><code>4</code></td><td>cobblestone</td><td><code>5:5</code></td><td>acacia_planks</td></tr>
+  <tr><td><code>6</code></td><td>bedrock</td><td></td><td></td></tr>
+</table>
 
-## Сборка
+Пример: <code>//set 5:3</code> — берёзовые доски.
 
-Нужны Rust, `cargo-horizon-mod` и SDK нужной сборки Horizon (подтягивается автоматически).
+---
 
-```sh
-cargo horizon-mod build --wasm
-```
+### 🔒 Ограничения
 
-Готовый пакет появляется по пути `target/horizon-mod/finteredit.hmod`.
+- <code>//set</code>, <code>//undo</code> и <code>/undo</code> требуют уровень оператора <b>2</b>.
+- Максимальный размер выделения: <b>32768</b> блоков.
+- История отмены хранит до <b>8</b> действий и очищается при выходе игрока.
+- Выделение и отмена привязаны к измерению.
+- Отмена восстанавливает только блоки; содержимое сундуков не восстанавливается.
 
-## Установка
+---
 
-1. Скопируйте `finteredit.hmod` в папку инстанса `horizon-mods/`.
-2. В `horizon-mods.txt` добавьте строку `mod.finteredit:true`.
-3. Полностью перезапустите инстанс.
+### 🌍 Локализация
 
-Предупреждение `wasm module cache disabled: ... Windows owner/DACL/inheritance trust is not verified` безопасно: кэш на диске отключён, но мод компилируется и работает.
+Сообщения переведены на русский и английский и лежат в <code>assets/finteredit/lang/</code>.
+Язык выбирается по языку клиента. Как добавить язык — см. <code>LANGUAGES.md</code>.
 
-## Автор и лицензия
+---
 
-Автор: **sinvides**. Лицензия: **MIT** (файл `LICENSE`).
+### 📦 Установка
 
-Мод собран под Horizon Nightly `2026-11-22` (`2b77287`), игра 26.3. Версия: **0.1.3**.
+1. Скопируйте <code>finteredit.hmod</code> в папку инстанса <code>horizon-mods/</code>.
+2. Добавьте строку <code>mod.finteredit:true</code> в <code>horizon-mods.txt</code>.
+3. Полностью перезапустите игру.
+
+Готовый пакет лежит в <code>releases/</code>.
+
+---
+
+### 🛠️ Сборка
+
+<pre><code>cargo horizon-mod build --wasm</code></pre>
+
+---
+
+### 📁 Структура
+
+<pre><code>
+src/
+├── lib.rs
+├── blocks.rs
+├── commands.rs
+├── editor.rs
+├── i18n.rs
+├── interact.rs
+└── selection.rs
+
+assets/finteredit/lang/
+├── en_us.json
+└── ru_ru.json
+</code></pre>
+
+---
+
+🌐 <b>Сайт:</b> ссылка будет добавлена
+
+👤 Автор: <b>sinvides</b> &nbsp;·&nbsp; 📄 Лицензия: <b>MIT</b>
+
+<small>Horizon Nightly 2026-11-22 (2b77287) · игра 26.3 · версия 0.1.4</small>
+
+</div>

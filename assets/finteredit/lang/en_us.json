@@ -6,5 +6,7 @@
   "finteredit.error.unknown_block": "Unknown block: %s",
   "finteredit.error.no_selection": "Select two points first.",
   "finteredit.error.no_second": "Select the second point.",
-  "finteredit.error.no_undo": "Nothing to undo."
+  "finteredit.error.no_undo": "Nothing to undo.",
+  "finteredit.error.too_large": "Selection too large: maximum %s blocks",
+  "finteredit.error.dimension": "Selection is in another dimension."
 }

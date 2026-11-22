@@ -8,8 +8,8 @@ mod selection;
 use std::sync::OnceLock;
 
 use mod_api::{
-    Flow, Hooks, HostSide, ItemKey, LeftClickBlockEvent, Registrar, RegisterCommandsEvent,
-    RegistrationContext, RightClickBlockEvent, RunModCommandEvent, ServerHost,
+    Flow, Hooks, HostSide, ItemKey, LeftClickBlockEvent, PlayerLoggedOutEvent, Registrar,
+    RegisterCommandsEvent, RegistrationContext, RightClickBlockEvent, RunModCommandEvent, ServerHost,
 };
 
 pub(crate) static AXE: OnceLock<ItemKey> = OnceLock::new();
@@ -37,5 +37,9 @@ impl Hooks for Mod {
 
     fn right_click_block(&self, side: HostSide<'_>, event: &mut RightClickBlockEvent<'_>) -> Flow {
         interact::right(side, event)
+    }
+
+    fn player_logged_out(&self, _: &mut dyn ServerHost, event: &mut PlayerLoggedOutEvent<'_>) {
+        selection::clear_player(event.player);
     }
 }
