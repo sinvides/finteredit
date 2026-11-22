@@ -10,7 +10,14 @@
 - Команда `//set <n>` застраивает выделенную область выбранным блоком. Вариант `/set` не зарегистрирован — работает только `//set`.
 - Команда `//undo` (или `/undo`) отменяет последнюю застройку и возвращает блоки в исходное состояние.
 
+<<<<<<< HEAD
 ## Команды
+=======
+<img src="https://img.shields.io/badge/version-0.1.5-7c5cff?style=for-the-badge" alt="version">
+<img src="https://img.shields.io/badge/license-MIT-00c853?style=for-the-badge" alt="license">
+<img src="https://img.shields.io/badge/Horizon-26.3-ff7a00?style=for-the-badge" alt="game">
+<img src="https://img.shields.io/badge/built%20with-Rust-dea584?style=for-the-badge" alt="rust">
+>>>>>>> a63d011 (0.1.5: restore dark orange message color)
 
 | Команда | Действие |
 | --- | --- |
@@ -101,4 +108,4 @@ cargo horizon-mod build --wasm
 
 Автор: **sinvides**. Лицензия: **MIT** (файл `LICENSE`).
 
-Мод собран под Horizon Nightly `2026-11-22` (`2b77287`), игра 26.3. Версия: **0.1.4**.
+Мод собран под Horizon Nightly `2026-11-22` (`2b77287`), игра 26.3. Версия: **0.1.5**.

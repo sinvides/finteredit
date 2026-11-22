@@ -4,7 +4,8 @@ fn arg(value: impl ToString) -> Text {
     Text::literal(value.to_string())
 }
 
-pub fn tell(host: &mut dyn ServerHost, player: PlayerRef, text: Text) {
+pub fn tell(host: &mut dyn ServerHost, player: PlayerRef, mut text: Text) {
+    text.style.color = Some("#CC6600".to_owned());
     let _ = player.tell(host, text);
 }
 
