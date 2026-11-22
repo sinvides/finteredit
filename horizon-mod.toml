@@ -1,0 +1,12 @@
+id = "finteredit"
+name = "finteredit"
+version = "0.1.2"
+authors = ["sinvides"]
+license = "MIT"
+api = "0.2"
+side = "both"
+capabilities = ["registries"]
+
+[wasm]
+sha512 = "708691f3180814f1b49f722590678bf9c63f1adcb11a5191fd44be1811ea2d4c8315e38bb2d367e89e504dfb9c5750d20f8e5ac9d38d7a4df03e7e9eba415b37"
+toolchain = "1.99.1 58cf8f9c35b355199727627d07ae34a4e2846d67"

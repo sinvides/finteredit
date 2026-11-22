@@ -1,0 +1,12 @@
+[package]
+name = "mod-finteredit"
+version = "0.1.2"
+authors = ["sinvides"]
+license = "MIT"
+edition = "2024"
+
+[dependencies]
+horizon-mod-api = { path = ".horizon/sdk/api/crates/horizon-mod-api" }
+
+[package.metadata.horizon]
+sdk = "2b77287de099c9316278ba7ac4d83590fdb7ef30"
