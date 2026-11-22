@@ -38,19 +38,38 @@
 
 Пример: `//set 5:3` — заполнить выделение берёзовыми досками.
 
+## Локализация
+
+Сообщения мода переведены на русский и английский. Файлы лежат в `assets/finteredit/lang/`.
+Язык выбирается автоматически по языку клиента. Чтобы добавить новый язык, скопируйте `en_us.json` под новым именем и переведите значения — подробнее в `LANGUAGES.md`.
+
 ## Структура проекта
 
 ```
 finteredit/
-├── horizon-mod.toml   # манифест мода, привязка к сборке Horizon и хеш mod.wasm
-├── Cargo.toml         # зависимости и пин SDK
+├── horizon-mod.toml
+├── Cargo.toml
 ├── Cargo.lock
-├── mod.wasm           # собранный WebAssembly-модуль
-├── src/lib.rs         # весь код мода
-├── assets/finteredit/
+├── mod.wasm
+├── LICENSE
+├── README.md
+├── LANGUAGES.md
+├── src/
+│   ├── lib.rs
+│   ├── blocks.rs
+│   ├── commands.rs
+│   ├── editor.rs
+│   ├── i18n.rs
+│   ├── interact.rs
+│   └── selection.rs
+├── assets/finteredit/lang/
+│   ├── en_us.json
+│   └── ru_ru.json
 ├── data/finteredit/
 └── target/horizon-mod/finteredit.hmod
 ```
+
+Каждая часть мода лежит в отдельном файле: блоки, команды, застройка, переводы, клики и выделение.
 
 ## Сборка
 
