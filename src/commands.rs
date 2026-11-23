@@ -1,10 +1,10 @@
 use mod_api::{
-    Command, CommandArgumentValue, CommandSource, Flow, ItemStack, RegisterCommandsEvent,
-    RunModCommandEvent, ServerHost,
+    Command, CommandArgumentValue, CommandSource, Flow, RegisterCommandsEvent, RunModCommandEvent,
+    ServerHost,
 };
 
 use crate::selection::{dimension, points, volume, MAX_VOLUME};
-use crate::{blocks, editor, i18n, AXE};
+use crate::{blocks, editor, i18n, wand, AXE};
 
 fn block_pos(position: [f64; 3]) -> [i32; 3] {
     [
@@ -33,7 +33,7 @@ pub fn run(host: &mut dyn ServerHost, event: &mut RunModCommandEvent<'_>) -> Flo
     match event.command.literals.first().map(String::as_str) {
         Some("wand") | Some("/wand") => {
             if let Some(axe) = AXE.get() {
-                let _ = player.give_stack(host, ItemStack::of(*axe));
+                let _ = player.give_stack(host, wand::create(*axe));
             }
             points().lock().unwrap().remove(&uuid);
             Flow::Cancel
@@ -164,7 +164,7 @@ pub fn run(host: &mut dyn ServerHost, event: &mut RunModCommandEvent<'_>) -> Flo
                 None => return Flow::Cancel,
             };
             match editor::restore(host, uuid, level, &current) {
-                Ok(count) => i18n::tell(host, player, i18n::undone(count)),
+                Ok((restored, failed)) => i18n::tell(host, player, i18n::undone(restored, failed)),
                 Err(editor::UndoError::Empty) => i18n::tell(host, player, i18n::no_undo()),
                 Err(editor::UndoError::WrongDimension) => i18n::tell(host, player, i18n::wrong_dimension()),
             }

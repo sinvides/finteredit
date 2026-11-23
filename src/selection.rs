@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::sync::{Mutex, OnceLock};
 
-use mod_api::{BlockState, PlayerRef, ServerHost};
+use mod_api::{BlockState, Compound, PlayerRef, ServerHost};
 
 pub const MAX_VOLUME: i64 = 32768;
 pub const MAX_UNDO_DEPTH: usize = 8;
@@ -13,9 +13,23 @@ pub struct Selection {
     pub dimension: String,
 }
 
+#[derive(Clone)]
+pub struct SavedBlock {
+    pub pos: [i32; 3],
+    pub state: BlockState,
+    pub data: Option<Compound>,
+}
+
+#[derive(Clone)]
+pub struct ClipboardBlock {
+    pub relative: [i32; 3],
+    pub state: BlockState,
+    pub data: Option<Compound>,
+}
+
 pub struct UndoEntry {
     pub dimension: String,
-    pub blocks: Vec<([i32; 3], BlockState)>,
+    pub blocks: Vec<SavedBlock>,
 }
 
 #[derive(Clone)]
@@ -23,7 +37,7 @@ pub struct Clipboard {
     pub dimension: String,
     pub origin: [i32; 3],
     pub offset: [i32; 3],
-    pub blocks: Vec<([i32; 3], BlockState)>,
+    pub blocks: Vec<ClipboardBlock>,
 }
 
 type Points = HashMap<u128, Selection>;

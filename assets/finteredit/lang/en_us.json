@@ -2,7 +2,7 @@
   "finteredit.point.first": "First point set: (%s, %s, %s) (%s blocks)",
   "finteredit.point.second": "Second point set: (%s, %s, %s) (%s blocks)",
   "finteredit.fill.done": "Filled blocks: %s",
-  "finteredit.undo.done": "Undone blocks: %s",
+  "finteredit.undo.done": "Restored %s blocks (%s failed)",
   "finteredit.error.unknown_block": "Unknown block: %s",
   "finteredit.error.no_selection": "Select two points first.",
   "finteredit.error.no_second": "Select the second point.",

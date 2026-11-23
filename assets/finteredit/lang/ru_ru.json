@@ -2,7 +2,7 @@
   "finteredit.point.first": "Первая точка установлена: (%s, %s, %s) (%s блоков)",
   "finteredit.point.second": "Вторая точка установлена: (%s, %s, %s) (%s блоков)",
   "finteredit.fill.done": "Заполнено блоков: %s",
-  "finteredit.undo.done": "Отменено блоков: %s",
+  "finteredit.undo.done": "Восстановлено блоков: %s (не удалось: %s)",
   "finteredit.error.unknown_block": "Неизвестный блок: %s",
   "finteredit.error.no_selection": "Сначала выберите две точки.",
   "finteredit.error.no_second": "Выберите вторую точку.",

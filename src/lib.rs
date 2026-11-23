@@ -5,6 +5,7 @@ mod i18n;
 mod interact;
 mod selection;
 mod suggest;
+mod wand;
 
 use std::sync::OnceLock;
 

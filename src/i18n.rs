@@ -27,8 +27,8 @@ pub fn filled(count: i64) -> Text {
     Text::translate("finteredit.fill.done", vec![arg(count)])
 }
 
-pub fn undone(count: usize) -> Text {
-    Text::translate("finteredit.undo.done", vec![arg(count)])
+pub fn undone(count: usize, failed: usize) -> Text {
+    Text::translate("finteredit.undo.done", vec![arg(count), arg(failed)])
 }
 
 pub fn unknown_block(name: &str) -> Text {

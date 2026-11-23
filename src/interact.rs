@@ -1,9 +1,12 @@
-use mod_api::{Flow, HostSide, ItemKey, LeftClickBlockEvent, PlayerRef, RightClickBlockEvent, ServerHost};
+use mod_api::{Flow, GameMode, HostSide, ItemKey, LeftClickBlockEvent, PlayerRef, RightClickBlockEvent, ServerHost};
 
 use crate::selection::{dimension, points, volume, Selection};
-use crate::{i18n, AXE};
+use crate::{i18n, wand, AXE};
 
 fn has_axe(host: &dyn ServerHost, player: PlayerRef, axe: ItemKey) -> bool {
+    if player.game_mode(host) != Some(GameMode::Creative) {
+        return false;
+    }
     player
         .selected_slot(host)
         .and_then(|slot| {
@@ -11,7 +14,7 @@ fn has_axe(host: &dyn ServerHost, player: PlayerRef, axe: ItemKey) -> bool {
                 .inventory_slots(host)
                 .and_then(|slots| slots.into_iter().find(|(s, _)| *s == slot as u32).map(|(_, stack)| stack))
         })
-        .is_some_and(|stack| stack.item() == axe)
+        .is_some_and(|stack| stack.item() == axe && wand::is_wand(&stack))
 }
 
 pub fn left(host: &mut dyn ServerHost, event: &mut LeftClickBlockEvent) -> Flow {
