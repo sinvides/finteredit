@@ -1,0 +1,18 @@
+Horizon Mod SDK — license notice
+================================
+
+horizon-mod-api (the Horizon Mod API crate), commit
+2b77287de099c9316278ba7ac4d83590fdb7ef30.
+
+Copyright (c) the Horizon project contributors.
+
+The Horizon SDK and the Horizon game are distributed under the terms of the
+GNU Lesser General Public License (LGPL) and/or the GNU General Public
+License (GPL). The full texts of these licenses are included in this release
+bundle as LICENSE.LGPL and LICENSE.GPL.
+
+This mod (finteredit) links against and includes compiled Horizon SDK code in
+mod.wasm. Your use of mod.wasm is subject to the Horizon SDK license terms.
+
+Source: https://github.com/horizon-rust/horizon
+SDK commit: 2b77287de099c9316278ba7ac4d83590fdb7ef30

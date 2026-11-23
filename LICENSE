@@ -1,3 +1,7 @@
+================================================================================
+finteredit — MIT License
+================================================================================
+
 MIT License
 
 Copyright (c) 2026 sinvides
@@ -19,3 +23,30 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+================================================================================
+Horizon SDK notice
+================================================================================
+
+This mod is built against the Horizon Mod SDK (horizon-mod-api),
+commit 2b77287de099c9316278ba7ac4d83590fdb7ef30, provided by the Horizon
+project (https://github.com/horizon-rust/horizon). The compiled mod.wasm
+includes Horizon SDK runtime code. The Horizon SDK is distributed under its
+own license terms; see LICENSE.HORIZON for the SDK notice and the LGPL/GPL
+texts referenced by the SDK.
+
+================================================================================
+Third-party licenses
+================================================================================
+
+This release bundle also includes the following third-party license texts:
+
+- LICENSE.LGPL — GNU Lesser General Public License (referenced by Horizon SDK)
+- LICENSE.GPL  — GNU General Public License (referenced by Horizon SDK)
+
+================================================================================
+Source
+================================================================================
+
+Source code for this build (v1.0.1):
+https://github.com/sinvides/finteredit/tree/v1.0.1
