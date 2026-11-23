@@ -1,52 +1,108 @@
-================================================================================
-finteredit — MIT License
-================================================================================
+finteredit — STRICT PERSONAL-USE LICENSE (SPUL) v1.0
 
-MIT License
+Copyright (c) 2026 sinvides. All rights reserved.
 
-Copyright (c) 2026 sinvides
+THIS IS NOT FREE SOFTWARE. This license grants only a limited, revocable,
+non-exclusive, non-transferable right to use the Software for personal,
+non-commercial purposes. All rights not expressly granted are reserved by
+the copyright holder.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. DEFINITIONS
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+"Software" means the finteredit mod, including the compiled mod.wasm, source
+code, documentation, assets, and any accompanying files distributed under
+this license.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+"Official Repository" means the repository located at
+https://github.com/sinvides/finteredit (including its tagged releases),
+which is the sole official source of the Software. Any other distribution
+channel is unofficial unless explicitly authorized in writing by the
+copyright holder.
 
-================================================================================
-Horizon SDK notice
-================================================================================
+2. GRANT OF LICENSE
 
-This mod is built against the Horizon Mod SDK (horizon-mod-api),
+Subject to full compliance with this license, you are granted a limited,
+revocable, non-exclusive, non-transferable, non-sublicensable right to:
+
+  (a) download, install, and use the Software solely for personal,
+      non-commercial purposes;
+  (b) view and study the source code for personal, non-commercial purposes.
+
+3. PROHIBITED USES
+
+You may NOT, under any circumstances, without prior written permission
+from the copyright holder:
+
+  (a) sell, resell, rent, lease, license, sublicense, or otherwise
+      commercialize the Software or any derivative thereof;
+  (b) include the Software, in whole or in part, in any commercial product,
+      paid service, bundle, subscription, or monetized distribution;
+  (c) distribute, publish, upload, mirror, or otherwise make the Software
+      available to third parties, whether modified or unmodified;
+  (d) modify, adapt, translate, reverse engineer, decompile, or disassemble
+      the Software, except to the extent expressly permitted by applicable
+      law;
+  (e) create derivative works based on the Software and distribute them;
+  (f) remove, alter, or obscure any copyright, license, or attribution
+      notices contained in the Software;
+  (g) use the Software for any unlawful purpose or in violation of any
+      applicable law or regulation.
+
+4. OFFICIAL SOURCE
+
+The Official Repository is the sole official source of the Software.
+Any copy obtained from any other source is unofficial and may be modified,
+incomplete, or malicious. The copyright holder is not responsible for
+unofficial copies.
+
+5. THIRD-PARTY COMPONENTS
+
+The Software is built against the Horizon Mod SDK (horizon-mod-api),
 commit 2b77287de099c9316278ba7ac4d83590fdb7ef30, provided by the Horizon
 project (https://github.com/horizon-rust/horizon). The compiled mod.wasm
 includes Horizon SDK runtime code. The Horizon SDK is distributed under its
 own license terms; see LICENSE.HORIZON for the SDK notice and the LGPL/GPL
-texts referenced by the SDK.
+texts referenced by the SDK. This license does not alter, replace, or
+restrict any rights granted to you under the licenses of third-party
+components.
 
-================================================================================
-Third-party licenses
-================================================================================
+6. TERMINATION
 
-This release bundle also includes the following third-party license texts:
+This license is effective until terminated. Your rights under this license
+terminate automatically and immediately, without notice, if you breach any
+term of this license. Upon termination, you must cease all use of the
+Software and destroy all copies in your possession or control.
 
-- LICENSE.LGPL — GNU Lesser General Public License (referenced by Horizon SDK)
-- LICENSE.GPL  — GNU General Public License (referenced by Horizon SDK)
+7. NO WARRANTY
 
-================================================================================
-Source
-================================================================================
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF,
+OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
-Source code for this build (v1.0.1):
-https://github.com/sinvides/finteredit/tree/v1.0.1
+8. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE COPYRIGHT HOLDER
+SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE, EVEN IF
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+9. GOVERNING LAW
+
+This license shall be governed by and construed in accordance with the laws
+of the jurisdiction in which the copyright holder resides, without regard
+to its conflict of law provisions.
+
+10. ENTIRE AGREEMENT
+
+This license constitutes the entire agreement between you and the copyright
+holder concerning the Software and supersedes all prior or contemporaneous
+understandings, agreements, representations, and warranties, whether
+written or oral, regarding the Software.
