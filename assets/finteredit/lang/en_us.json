@@ -1,0 +1,15 @@
+{
+  "finteredit.point.first": "First point set: (%s, %s, %s) (%s)",
+  "finteredit.point.second": "Second point set: (%s, %s, %s) (%s %s)",
+  "finteredit.fill.done": "Filled %s %s",
+  "finteredit.undo.done": "Restored %s %s (%s failed)",
+  "finteredit.error.unknown_block": "Unknown block: %s",
+  "finteredit.error.no_selection": "Select two points first.",
+  "finteredit.error.no_second": "Select the second point.",
+  "finteredit.error.no_undo": "Nothing to undo.",
+  "finteredit.error.too_large": "Selection too large: maximum %s %s",
+  "finteredit.error.dimension": "Selection is in another dimension.",
+  "finteredit.copy.done": "Copied %s %s",
+  "finteredit.paste.done": "Pasted %s %s",
+  "finteredit.error.no_clipboard": "Nothing to paste."
+}

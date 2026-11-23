@@ -1,0 +1,14 @@
+id = "finteredit"
+name = "finteredit"
+version = "1.0.1"
+description = "Two-point block selection and fill wand for Horizon. Select two corners with an axe and fill the cuboid with a fixed block."
+homepage = "https://github.com/sinvides/finteredit"
+authors = ["sinvides"]
+license = "MIT"
+api = "0.2"
+side = "both"
+capabilities = ["registries"]
+
+[wasm]
+sha512 = "43325110dadc500db63adc69285e96030b0e2c84f9552084bb520098b44c9f0612950e1480edfd42744020b8fab75cf70b3abfd2a1786d208af3c0d801c85961"
+toolchain = "1.99.1 58cf8f9c35b355199727627d07ae34a4e2846d67"

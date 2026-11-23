@@ -1,0 +1,15 @@
+[package]
+name = "finteredit"
+version = "1.0.1"
+description = "Two-point block selection and fill wand for Horizon. Select two corners with an axe and fill the cuboid with a fixed block."
+homepage = "https://github.com/sinvides/finteredit"
+authors = ["sinvides"]
+license = "MIT"
+edition = "2024"
+
+[dependencies]
+horizon-mod-api = { path = ".horizon/sdk/api/crates/horizon-mod-api" }
+serde_json = "1"
+
+[package.metadata.horizon]
+sdk = "2b77287de099c9316278ba7ac4d83590fdb7ef30"
