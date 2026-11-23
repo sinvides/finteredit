@@ -18,11 +18,21 @@ pub struct UndoEntry {
     pub blocks: Vec<([i32; 3], BlockState)>,
 }
 
+#[derive(Clone)]
+pub struct Clipboard {
+    pub dimension: String,
+    pub origin: [i32; 3],
+    pub offset: [i32; 3],
+    pub blocks: Vec<([i32; 3], BlockState)>,
+}
+
 type Points = HashMap<u128, Selection>;
 type History = HashMap<u128, Vec<UndoEntry>>;
+type Clipboards = HashMap<u128, Clipboard>;
 
 static POINTS: OnceLock<Mutex<Points>> = OnceLock::new();
 static UNDO: OnceLock<Mutex<History>> = OnceLock::new();
+static CLIPBOARDS: OnceLock<Mutex<Clipboards>> = OnceLock::new();
 
 pub fn points() -> &'static Mutex<Points> {
     POINTS.get_or_init(|| Mutex::new(HashMap::new()))
@@ -32,6 +42,10 @@ pub fn undo() -> &'static Mutex<History> {
     UNDO.get_or_init(|| Mutex::new(HashMap::new()))
 }
 
+pub fn clipboards() -> &'static Mutex<Clipboards> {
+    CLIPBOARDS.get_or_init(|| Mutex::new(HashMap::new()))
+}
+
 pub fn dimension(host: &dyn ServerHost, player: PlayerRef) -> Option<String> {
     player.dimension(host).map(|value| value.to_string())
 }
@@ -39,6 +53,7 @@ pub fn dimension(host: &dyn ServerHost, player: PlayerRef) -> Option<String> {
 pub fn clear_player(uuid: u128) {
     points().lock().unwrap().remove(&uuid);
     undo().lock().unwrap().remove(&uuid);
+    clipboards().lock().unwrap().remove(&uuid);
 }
 
 pub fn push_undo(uuid: u128, entry: UndoEntry) {

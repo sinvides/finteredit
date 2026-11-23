@@ -15,7 +15,7 @@ A small mod for Horizon (Minecraft: Java Edition 26.3, rewritten in Rust). Lets 
 
 ## Commands
 
-<img src="https://img.shields.io/badge/version-0.1.5-7c5cff?style=for-the-badge" alt="version">
+<img src="https://img.shields.io/badge/version-0.1.6-7c5cff?style=for-the-badge" alt="version">
 <img src="https://img.shields.io/badge/license-MIT-00c853?style=for-the-badge" alt="license">
 <img src="https://img.shields.io/badge/Horizon-26.3-ff7a00?style=for-the-badge" alt="game">
 <img src="https://img.shields.io/badge/built%20with-Rust-dea584?style=for-the-badge" alt="rust">
@@ -129,7 +129,7 @@ Built for Horizon Nightly `2026-11-22` (`2b77287`), game 26.3. Version: **0.1.5*
 
 ## Команды
 
-<img src="https://img.shields.io/badge/version-0.1.5-7c5cff?style=for-the-badge" alt="version">
+<img src="https://img.shields.io/badge/version-0.1.6-7c5cff?style=for-the-badge" alt="version">
 <img src="https://img.shields.io/badge/license-MIT-00c853?style=for-the-badge" alt="license">
 <img src="https://img.shields.io/badge/Horizon-26.3-ff7a00?style=for-the-badge" alt="game">
 <img src="https://img.shields.io/badge/built%20with-Rust-dea584?style=for-the-badge" alt="rust">
@@ -144,6 +144,8 @@ Built for Horizon Nightly `2026-11-22` (`2b77287`), game 26.3. Version: **0.1.5*
 
 ## Доступные блоки
 
+`//set` принимает как числовой ID (легаси-таблица Minecraft 1.12), так и прямое имя блока.
+
 | `n` | Блок |
 | --- | --- |
 | `0` | `minecraft:air` |
@@ -151,14 +153,16 @@ Built for Horizon Nightly `2026-11-22` (`2b77287`), game 26.3. Version: **0.1.5*
 | `2` | `minecraft:grass_block` |
 | `3` | `minecraft:dirt` |
 | `4` | `minecraft:cobblestone` |
-| `5:1` | `minecraft:oak_planks` |
-| `5:2` | `minecraft:spruce_planks` |
-| `5:3` | `minecraft:birch_planks` |
-| `5:4` | `minecraft:jungle_planks` |
-| `5:5` | `minecraft:acacia_planks` |
-| `6` | `minecraft:bedrock` |
+| `5:0` | `minecraft:oak_planks` |
+| `5:1` | `minecraft:spruce_planks` |
+| `5:2` | `minecraft:birch_planks` |
+| `5:3` | `minecraft:jungle_planks` |
+| `5:4` | `minecraft:acacia_planks` |
+| `5:5` | `minecraft:dark_oak_planks` |
+| `6` | `minecraft:oak_sapling` |
+| `7` | `minecraft:bedrock` |
 
-Пример: `//set 5:3` — заполнить выделение берёзовыми досками.
+Примеры: `//set 7`, `//set 5:4`, `//set minecraft:air`, `//set stone`.
 
 ## Ограничения
 
@@ -222,6 +226,6 @@ cargo horizon-mod build --wasm
 
 Автор: **sinvides**. Лицензия: **MIT** (файл `LICENSE`).
 
-Мод собран под Horizon Nightly `2026-11-22` (`2b77287`), игра 26.3. Версия: **0.1.5**.
+Мод собран под Horizon Nightly `2026-11-22` (`2b77287`), игра 26.3. Версия: **0.1.6**.
 
 </details>

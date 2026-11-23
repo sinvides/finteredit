@@ -4,12 +4,14 @@ mod editor;
 mod i18n;
 mod interact;
 mod selection;
+mod suggest;
 
 use std::sync::OnceLock;
 
 use mod_api::{
     Flow, Hooks, HostSide, ItemKey, LeftClickBlockEvent, PlayerLoggedOutEvent, Registrar,
     RegisterCommandsEvent, RegistrationContext, RightClickBlockEvent, RunModCommandEvent, ServerHost,
+    TabCompleteEvent,
 };
 
 pub(crate) static AXE: OnceLock<ItemKey> = OnceLock::new();
@@ -41,5 +43,9 @@ impl Hooks for Mod {
 
     fn player_logged_out(&self, _: &mut dyn ServerHost, event: &mut PlayerLoggedOutEvent<'_>) {
         selection::clear_player(event.player);
+    }
+
+    fn tab_complete(&self, host: &mut dyn ServerHost, event: &mut TabCompleteEvent<'_>) {
+        suggest::blocks(host, event);
     }
 }

@@ -54,3 +54,15 @@ pub fn too_large(max: i64) -> Text {
 pub fn wrong_dimension() -> Text {
     Text::translate("finteredit.error.dimension", vec![])
 }
+
+pub fn copied(count: usize) -> Text {
+    Text::translate("finteredit.copy.done", vec![arg(count)])
+}
+
+pub fn pasted(count: usize) -> Text {
+    Text::translate("finteredit.paste.done", vec![arg(count)])
+}
+
+pub fn no_clipboard() -> Text {
+    Text::translate("finteredit.error.no_clipboard", vec![])
+}

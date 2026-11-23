@@ -1,12 +1,15 @@
 {
   "finteredit.point.first": "Первая точка установлена: (%s, %s, %s) (%s блоков)",
   "finteredit.point.second": "Вторая точка установлена: (%s, %s, %s) (%s блоков)",
-  "finteredit.fill.done": "Застроено блоков: %s",
+  "finteredit.fill.done": "Заполнено блоков: %s",
   "finteredit.undo.done": "Отменено блоков: %s",
   "finteredit.error.unknown_block": "Неизвестный блок: %s",
-  "finteredit.error.no_selection": "Сначала выделите две точки.",
-  "finteredit.error.no_second": "Выделите вторую точку.",
+  "finteredit.error.no_selection": "Сначала выберите две точки.",
+  "finteredit.error.no_second": "Выберите вторую точку.",
   "finteredit.error.no_undo": "Нечего отменять.",
   "finteredit.error.too_large": "Выделение слишком большое: максимум %s блоков",
-  "finteredit.error.dimension": "Выделение находится в другом измерении."
+  "finteredit.error.dimension": "Выделение находится в другом измерении.",
+  "finteredit.copy.done": "Скопировано блоков: %s",
+  "finteredit.paste.done": "Вставлено блоков: %s",
+  "finteredit.error.no_clipboard": "Нечего вставлять."
 }
