@@ -1,7 +1,8 @@
-use mod_api::{BlockUpdateFlags, Host, HostBlockStates, LevelRef, ServerHost};
+use mod_api::{BlockState, BlockUpdateFlags, Compound, Host, LevelRef, ServerHost};
 
 use crate::selection::{
-    clipboards, each_pos, push_undo, undo, Clipboard, ClipboardBlock, SavedBlock, Selection, UndoEntry,
+    clipboards, each_pos, push_undo, undo, Clipboard, ClipboardBlock, SavedBlock, Selection,
+    UndoEntry,
 };
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -16,42 +17,28 @@ fn flags() -> BlockUpdateFlags {
         | BlockUpdateFlags::SKIP_BLOCK_ENTITY_SIDE_EFFECTS
 }
 
-fn saved_block(host: &dyn Host, level: LevelRef, pos: [i32; 3]) -> Option<SavedBlock> {
+fn old_block(host: &dyn Host, level: LevelRef, pos: [i32; 3]) -> Option<(BlockState, Option<Compound>)> {
     let state = level.block_state(host, pos)?;
-    let data = match host.block_entity(level, pos) {
-        Some(entity) => Some(entity.data(host)?),
-        None => None,
-    };
-    Some(SavedBlock { pos, state, data })
+    let data = host.block_entity(level, pos).and_then(|entity| entity.data(host));
+    Some((state, data))
 }
 
-fn can_write(host: &dyn Host, level: LevelRef, pos: [i32; 3]) -> bool {
-    if host.block_entity(level, pos).is_some() {
-        return false;
-    }
-    match level
-        .block_state(host, pos)
-        .and_then(|state| host.block_states().has_block_entity(state))
-    {
-        Some(true) => false,
-        _ => true,
-    }
+fn current_block(host: &dyn Host, level: LevelRef, pos: [i32; 3]) -> Option<(BlockState, Option<Compound>)> {
+    old_block(host, level, pos)
 }
 
-fn apply(host: &mut dyn ServerHost, level: LevelRef, saved: &SavedBlock) -> bool {
-    if !can_write(host, level, saved.pos) {
-        return false;
-    }
-    if !matches!(level.set_block(host, saved.pos, saved.state, flags()), Ok(true)) {
-        return false;
-    }
-    if let Some(data) = &saved.data {
-        if let Some(entity) = host.block_entity(level, saved.pos) {
-            let _ = entity.replace_data(host, data.clone());
-            let _ = entity.set_changed(host);
+fn entity_data(host: &dyn Host, level: LevelRef, pos: [i32; 3]) -> Option<Compound> {
+    host.block_entity(level, pos).and_then(|entity| entity.data(host))
+}
+
+fn accept_payload(host: &mut dyn ServerHost, level: LevelRef, pos: [i32; 3], data: &Compound) -> bool {
+    match host.block_entity(level, pos) {
+        Some(entity) => match entity.replace_data(host, data.clone()) {
+            Ok(true) => true,
+            Ok(false) | Err(_) => entity.data(host) == Some(data.clone()),
         }
+        None => false,
     }
-    true
 }
 
 pub fn fill(host: &mut dyn ServerHost, level: LevelRef, uuid: u128, selection: Selection, state: mod_api::BlockState) {
@@ -61,15 +48,20 @@ pub fn fill(host: &mut dyn ServerHost, level: LevelRef, uuid: u128, selection: S
     };
     let mut blocks = Vec::new();
     each_pos(selection.first, second, |pos| {
-        if !can_write(host, level, pos) {
+        let Some((old_state, old_data)) = old_block(host, level, pos) else {
+            return;
+        };
+        if !matches!(level.set_block(host, pos, state, flags()), Ok(true)) {
             return;
         }
-        let old = saved_block(host, level, pos);
-        if matches!(level.set_block(host, pos, state, flags()), Ok(true)) {
-            if let Some(old) = old {
-                blocks.push(old);
-            }
-        }
+        let new_data = entity_data(host, level, pos);
+        blocks.push(SavedBlock {
+            pos,
+            old_state,
+            old_data,
+            new_state: state,
+            new_data,
+        });
     });
     push_undo(
         uuid,
@@ -99,11 +91,11 @@ pub fn copy(
     ];
     let mut blocks = Vec::new();
     each_pos(selection.first, second, |pos| {
-        if let Some(saved) = saved_block(host, level, pos) {
+        if let Some((state, data)) = old_block(host, level, pos) {
             blocks.push(ClipboardBlock {
                 relative: [pos[0] - origin[0], pos[1] - origin[1], pos[2] - origin[2]],
-                state: saved.state,
-                data: saved.data,
+                state,
+                data,
             });
         }
     });
@@ -154,21 +146,34 @@ pub fn paste(
             base[1] + block.relative[1],
             base[2] + block.relative[2],
         ];
-        if !can_write(host, level, pos) {
-            continue;
-        }
-        let old = saved_block(host, level, pos);
-        if matches!(level.set_block(host, pos, block.state, flags()), Ok(true)) {
-            if let Some(data) = block.data {
-                if let Some(entity) = host.block_entity(level, pos) {
-                    let _ = entity.replace_data(host, data);
-                    let _ = entity.set_changed(host);
-                }
+        let old = old_block(host, level, pos);
+        let block_written = matches!(level.set_block(host, pos, block.state, flags()), Ok(true));
+        let payload_ok = match &block.data {
+            Some(data) => accept_payload(host, level, pos, data),
+            None => true,
+        };
+        if block_written && payload_ok {
+            if let Some(entity) = host.block_entity(level, pos) {
+                let _ = entity.set_changed(host);
             }
-            if let Some(old) = old {
-                undo_blocks.push(old);
+            if let Some((old_state, old_data)) = old {
+                undo_blocks.push(SavedBlock {
+                    pos,
+                    old_state,
+                    old_data,
+                    new_state: block.state,
+                    new_data: block.data.clone(),
+                });
             }
             count += 1;
+        } else if let Some((old_state, old_data)) = old {
+            undo_blocks.push(SavedBlock {
+                pos,
+                old_state,
+                old_data,
+                new_state: block.state,
+                new_data: block.data.clone(),
+            });
         }
     }
     push_undo(
@@ -199,8 +204,20 @@ pub fn restore(
     let mut failed = Vec::new();
     let mut restored = 0;
     for saved in entry.blocks {
-        if apply(host, level, &saved) {
-            restored += 1;
+        let current = current_block(host, level, saved.pos);
+        let untouched = current.as_ref() == Some(&(saved.new_state.clone(), saved.new_data.clone()));
+        if untouched {
+            if matches!(level.set_block(host, saved.pos, saved.old_state, flags()), Ok(true)) {
+                if let Some(data) = &saved.old_data {
+                    if let Some(entity) = host.block_entity(level, saved.pos) {
+                        let _ = entity.replace_data(host, data.clone());
+                        let _ = entity.set_changed(host);
+                    }
+                }
+                restored += 1;
+            } else {
+                failed.push(saved);
+            }
         } else {
             failed.push(saved);
         }

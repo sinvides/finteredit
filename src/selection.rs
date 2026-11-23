@@ -16,8 +16,10 @@ pub struct Selection {
 #[derive(Clone)]
 pub struct SavedBlock {
     pub pos: [i32; 3],
-    pub state: BlockState,
-    pub data: Option<Compound>,
+    pub old_state: BlockState,
+    pub old_data: Option<Compound>,
+    pub new_state: BlockState,
+    pub new_data: Option<Compound>,
 }
 
 #[derive(Clone)]
